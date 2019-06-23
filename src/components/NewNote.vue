@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     addNote() {
-      this.$store.dispatch('addNote', { ...this.note, 
+      this.$store.dispatch('addNote', { ...this.note,
         date: new Date(Date.now()).toLocaleString()
       });
     }
@@ -36,7 +36,6 @@ export default {
     this.priority = this.$store.getters.getPriority;
     this.note = this.$store.getters.getNote;
   }
-  
 }
 </script>
 

@@ -15,21 +15,17 @@
 <script>
 export default {
   props: {
-    value: {
-      type: String,
-      required: true
-    },
     placeholder: {
       type: String,
       default: 'Search'
     }
   },
   data () {
-    return { search: this.value }
+    return { search: '' }
   },
   watch: {
-    search (val) {
-      this.$emit('search', val);
+    search(val) {
+      this.$store.dispatch('changeSearch', val);
     }
   }
 }

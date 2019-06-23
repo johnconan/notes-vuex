@@ -1,6 +1,7 @@
 export default {
   state: {
     title: 'Notes App',
+    search: '',
     message: null,
     notes: [
       {
@@ -78,13 +79,16 @@ export default {
       state.notes[payload].title = state.editFields.editTitle;
       state.notes[payload].descr = state.editFields.editDescr;
       state.notes[payload].date = new Date(Date.now()).toLocaleString();
+    },
+    changeSearch(state, payload) {
+      state.search = payload;
     }
   },
   actions: {
-    addNote({ commit }, payload) {
+    addNote({commit}, payload) {
       commit('addNote', payload);
     },
-    removeNote({ commit }, payload) {
+    removeNote({commit}, payload) {
       commit('removeNote', payload);
     },
     editNote({commit}, payload) {
@@ -95,14 +99,14 @@ export default {
     },
     saveEdit({commit}, payload) {
       commit('saveEdit', payload);
+    },
+    changeSearch({commit}, payload) {
+      commit('changeSearch', payload);
     }
   },
   getters: {
     getTitle(state) {
       return state.title;
-    },
-    getNotes(state) {
-      return state.notes;
     },
     getPriority(state) {
       return state.priority;
@@ -118,6 +122,21 @@ export default {
     },
     getEditFields(state) {
       return state.editFields;
+    },
+    getSearch(state) {
+      return state.search;
+    },
+    getFilterNotes(state) {
+      let arr = state.notes,
+          search = state.search;
+      if (!search) return arr;
+      search = search.trim().toLowerCase();
+      arr = arr.filter((item) => {
+        if (item.title.toLowerCase().indexOf(search) !== -1) {
+          return item;
+        }
+      });
+      return arr;
     }
   }
 }

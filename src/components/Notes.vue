@@ -19,7 +19,7 @@
         <p v-if="!note.edit" >{{ note.descr }}</p>
         <input
           @keydown.enter="saveEdit(index)"
-          @keydown.esc="cancelEdit(index)" 
+          @keydown.esc="cancelEdit(index)"
           v-if="note.edit" type="text" 
           v-model="editFields.editDescr">
         <span>{{ note.date }}</span>
@@ -32,7 +32,6 @@
 export default {
   data() {
     return {
-      notes: null,
       editFields: null
     }
   },
@@ -42,8 +41,12 @@ export default {
       required: true
     }
   },
+  computed: {
+    notes() {
+      return this.$store.getters.getFilterNotes;
+    }
+  },
   created() {
-    this.notes = this.$store.getters.getNotes;
     this.editFields = this.$store.getters.getEditFields;
   },
   methods: {
